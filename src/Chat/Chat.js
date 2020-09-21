@@ -27,13 +27,26 @@ class Chat extends Component {
     }, 1000);
   }
 
+  send = (sendMessage) => {
+    let messages = this.state.messages.concat(sendMessage);
+    const answerMessage = answersData.find((answer) => answer.tags.includes(sendMessage.text));
+    if (answerMessage) {
+      messages = messages.concat(answerMessage);
+    }
+    setTimeout(() => {
+      this.setState({
+        messages,
+      });
+    }, 0);
+  };
+
   render() {
     const { shop, messages } = this.state;
     return (
       <main className="Chat">
         <ChatHeader shop={shop} />
         <ChatBox messages={messages} />
-        <ChatInput />
+        <ChatInput send={this.send} />
       </main>
     );
   }
