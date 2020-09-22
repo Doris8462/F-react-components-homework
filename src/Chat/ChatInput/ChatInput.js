@@ -20,7 +20,6 @@ class ChatInput extends Component {
     if (this.state.sendMessage.text) {
       this.props.send(this.state.sendMessage);
     }
-    document.getElementById('sendBar').value = '';
     this.setState({
       sendMessage: { text: '' },
     });
@@ -29,7 +28,7 @@ class ChatInput extends Component {
   render() {
     return (
       <footer className="ChatInput" onChange={(event) => this.handleChange(event)}>
-        <input type="text" id="sendBar" />
+        <input type="text" id="sendBar" value={this.state.sendMessage.text} />
         <button type="button" onClick={this.handleSubmit}>
           Send
         </button>
