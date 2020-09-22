@@ -3,19 +3,32 @@ import './ChatInput.scss';
 import { ROLE } from '../../constants';
 
 class ChatInput extends Component {
+  constructor() {
+    super();
+    this.state = {
+      sendMessage: { role: ROLE.CUSTOMER, text: '' },
+    };
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      sendMessage: { text: event.target.value },
+    });
+  };
+
   handleSubmit = () => {
-    const sendMessage = {};
-    sendMessage.role = ROLE.CUSTOMER;
-    sendMessage.text = document.getElementById('sendBar').value;
-    if (sendMessage.text) {
-      this.props.send(sendMessage);
+    if (this.state.sendMessage.text) {
+      this.props.send(this.state.sendMessage);
     }
     document.getElementById('sendBar').value = '';
+    this.setState({
+      sendMessage: { text: '' },
+    });
   };
 
   render() {
     return (
-      <footer className="ChatInput">
+      <footer className="ChatInput" onChange={(event) => this.handleChange(event)}>
         <input type="text" id="sendBar" />
         <button type="button" onClick={this.handleSubmit}>
           Send
